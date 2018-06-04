@@ -1,49 +1,110 @@
-console.log("script.js CONNECTED!");
+function deleteProduct(e){
+  var buttonClicked = e.currentTarget;
+  var productToDelete = buttonClicked.parentNode.parentNode;
+  var tableOfProducts = productToDelete.parentNode;
 
-// find the save button (it's only 1 so we use "querySelector()")
-var saveButton = document.querySelector(".save-new-plan");
+  tableOfProducts.removeChild(productToDelete);
+}
 
-// find the input to get what the user typed
-var textBox = document.querySelector("input");
+function getPriceByProduct(productNode){
+  var productPrice = productNode.getElementsByClassName("product-price")[0].innerHTML;
+  var productQuantity = productNode.getElementsByClassName("product-quantity")[0].value;
+  var totalPrice = productPrice * productQuantity;
 
-// #1 find the parent for adding elements to it
-var list = document.querySelector("ul");
+  return totalPrice;
+}
 
-// find initial delete buttons
-var buttons = document.querySelectorAll("li > button");
+function updatePriceByProduct(productPrice, index){
+  document.getElementsByClassName("product-total")[index].innerHTML = productPrice.toFixed(2);
+}
 
-// activate initial delete buttons
-buttons.forEach(function (oneButton) {
-  oneButton.onclick = function () {
-    var item = oneButton.parentNode;
-    item.remove();
-  };
-});
-
-// add a "click" event handler (when the button is clicked call this function)
-saveButton.onclick = function () {
-  if (textBox.value === "") {
-    // cancel the function if there is no text
-    return;
+function getTotalPrice() {
+  var products = document.getElementsByClassName("product");
+  var totalPrice = 0;
+  for (var i = 0; i < products.length; i++) {
+    var productTotalPrice = getPriceByProduct(products[i]);
+    updatePriceByProduct(productTotalPrice, i);
+    totalPrice += productTotalPrice;
   }
+  document.getElementById("total-price").innerHTML = totalPrice.toFixed(2);
+}
 
-  // #2 create child element <li></li>
-  var newItem = document.createElement("li");
+function createDeleteButtonNode(){
+  var productNode = document.createElement("div");
+  var newButtonElement = document.createElement("button");
+  var buttonText = document.createTextNode("Delete");
 
-  // #3 fill child with the content that the USER TYPED (input's value)
-  newItem.innerHTML = textBox.value + " <button>Delete</button>";
+  newButtonElement.appendChild(buttonText);
+  newButtonElement.className = "btn-delete";
+  productNode.className = "col-xs-2";
+  productNode.appendChild(newButtonElement);
 
-  // #4 add new child to parent
-  list.appendChild(newItem);
+  return productNode;
+}
 
-  // find the new delete button
-  var newButton = newItem.querySelector("button");
+function createQuantityNode(){
+  var productNode = document.createElement("div");
+  var newLabelElement = document.createElement("label");
+  var newInputElement = document.createElement("input");
 
-  // activate the new delete button
-  newButton.onclick = function () {
-    newItem.remove();
-  };
+  newLabelElement.innerHTML = "QTY:";
+  newLabelElement.htmlFor = "quantity";
+  newInputElement.type = "text";
+  newInputElement.className = "product-quantity";
+  newInputElement.value = "0";
+  newInputElement.id = "quantity";
+  productNode.className = "col-xs-3";
+  productNode.appendChild(newLabelElement);
+  productNode.appendChild(newInputElement);
 
-  // delete the text from the input (we already added the item)
-  textBox.value = "";
+  return productNode;
+}
+
+function createSpanNode(nodeClassName, spanClassName, value){
+  var productNode = document.createElement("div");
+  var spanElement = document.createElement("span");
+
+  spanElement.innerHTML = value;
+  spanElement.className = spanClassName;
+  productNode.className = nodeClassName;
+  if(isNaN(value) === false) {
+    productNode.appendChild(document.createTextNode("$"));
+  }
+  productNode.appendChild(spanElement);
+
+  return productNode;
+}
+
+function createNewProduct(){
+  var newRowDiv = document.createElement("div");
+  var newProductDiv = document.createElement("div");
+  var productTableDiv = document.getElementById("product-table");
+  var createRowDiv = document.getElementsByClassName("new-product")[0].parentNode;
+
+  var newProductName = document.getElementById("new-product-name").value;
+  var newProductPrice = document.getElementById("new-product-price").value;
+
+  newProductDiv.className = "product";
+  newProductDiv.appendChild(createSpanNode("col-xs-3", "product-name", newProductName));
+  newProductDiv.appendChild(createSpanNode("col-xs-2", "product-price", newProductPrice));
+  newProductDiv.appendChild(createQuantityNode());
+  newProductDiv.appendChild(createSpanNode("col-xs-2", "product-total", "0.00"));
+  newProductDiv.appendChild(createDeleteButtonNode());
+
+  newRowDiv.className = "row";
+  newRowDiv.appendChild(newProductDiv);
+  productTableDiv.insertBefore(newRowDiv, createRowDiv);
+}
+
+window.onload = function(){
+  var calculatePriceButton = document.getElementById("calc-prices-button");
+  var createProductButton = document.getElementById("new-product-create");
+  var deleteButtons = document.getElementsByClassName("btn-delete");
+
+  calculatePriceButton.onclick = getTotalPrice;
+  createProductButton.onclick = createNewProduct;
+
+  for(var i = 0; i<deleteButtons.length ; i++){
+    deleteButtons[i].onclick = deleteProduct;
+  }
 };
