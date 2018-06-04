@@ -4,21 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Weekend Plans</title>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.css">
+  <title>Ironhack Cart</title>
 </head>
 <body>
-  <h1>Weekend Plans</h1>
-
-  <input type="text" placeholder="Your next plan..." />
-  <button class="save-new-plan">Save Plan</button>
-
-  <ul>
-    <li>Watch a movie <button>Delete</button></li>
-  </ul>
-
-  <!-- Script tags at the END of the body -->
-  <script src="./js/script.js"></script>
+    <div class="container">
+            <h1 class= titleLines>
+                <p>Ironhack </p>
+                <p>Merchandising Shop</p>
+            </h1>
+    </div>
+    <div class="container" id="product-table">
+      <div class="row">
+        <div class="product">
+          <div class="col-xs-3"><span class="product-name">Iron Bubbble Head</span></div>
+          <div class="col-xs-2">$<span class="product-price">25.00</span></div>
+          <div class="col-xs-3"><label for="quantity">QTY:</label><input type="text" class="product-quantity" id="quantity" value="0"></div>
+          <div class="col-xs-2">$<span class="product-total">0.00</span></div>
+          <div class="col-xs-2"><button type="button" class="btn-delete">Delete</button></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="product">
+          <div class="col-xs-3"><span class="product-name">Iron Shirt</span></div>
+          <div class="col-xs-2">$<span class="product-price">40.00</span></div>
+          <div class="col-xs-3"><label for="quantity">QTY:</label><input type="text" class="product-quantity" id="quantity" value="0"></div>
+          <div class="col-xs-2">$<span class="product-total">0.00</span></div>
+          <div class="col-xs-2"><button type="button" class="btn-delete">Delete</button></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class = "new-product">
+          <div class="col-xs-4"><label for="new-product-name">Name:</label><input type="text" id="new-product-name"></div>
+          <div class="col-xs-4"><label for="new-product-price">Price:</label><input type="text" id="new-product-price" value="0"></div>
+          <div class="col-xs-2 col-xs-offset-2"><button type="button" id="new-product-create">Create</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 text-center">
+      <button type="button" class="btn-success" id="calc-prices-button">Calculate Prices</button>
+    </div>
+    <div class="col-xs-12 text-center">
+      <h2>Total Price: $<span id="total-price">0</span></h2>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./css/style.css"></script>
 </body>
 </html>
